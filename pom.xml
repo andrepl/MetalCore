@@ -12,6 +12,19 @@
         <project.softdependencies>[Vault]</project.softdependencies>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>mvm-releases</id>
+            <name>releases</name>
+            <url>http://maven.minevsmine.com/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>mvm-snapshots</id>
+            <name>snapshots</name>
+            <url>http://maven.minevsmine.com/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <groupId>com.norcode.bukkit.metalcore</groupId>
     <artifactId>MetalCore</artifactId>
     <packaging>jar</packaging>
@@ -34,6 +47,14 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -41,10 +62,6 @@
         <repository>
             <id>bukkit-release-repo</id>
             <url>http://repo.bukkit.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>vault-repo</id>
-            <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
         </repository>
     </repositories>
     <dependencies>
