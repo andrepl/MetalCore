@@ -6,6 +6,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,18 @@ public class YamlDatastore implements Datastore {
 	protected Map<UUID, String> playerIdMap = new HashMap<UUID, String>();
 	protected LRUCache<UUID, DirtyableConfiguration> playerData;
 	protected DirtyableSaveQueue saveQueue = new DirtyableSaveQueue();
+
+	protected BukkitRunnable saveTask;
+
+	protected void savePlayerData(DirtyableConfiguration cfg) {
+		File pdataDir = new File(MetalCorePlugin.getMetalCoreDir(), "player-data");
+		try {
+			cfg.save(new File(pdataDir, cfg.getUniqueId().toString() + ".yml"));
+		 	cfg.setDirty(false);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public YamlDatastore(MetalCorePlugin plugin) {
 		this.plugin = plugin;
@@ -51,10 +64,22 @@ public class YamlDatastore implements Datastore {
 			playerIdMap.put(UUID.fromString(key), cfg.getString(key));
 		}
 		playerData = new LRUCache<UUID, DirtyableConfiguration>(MetalCorePlugin.getMetalCoreConfig().getInt("playerdata-cache"));
+
+		saveTask = new BukkitRunnable() {
+			@Override
+			public void run() {
+				for (int i=0; i < 5 && !saveQueue.isEmpty(); i++) {
+					DirtyableConfiguration cfg = saveQueue.poll();
+					savePlayerData(cfg);
+				}
+			}
+		};
+		saveTask.runTaskTimer(plugin, 20, 20);
 	}
 
 	@Override
 	public void onDisable() {
+		saveTask.cancel();
 		YamlConfiguration cfg = new YamlConfiguration();
 		for (Map.Entry<UUID, String> entry: playerIdMap.entrySet()) {
 			cfg.set(entry.getKey().toString(), entry.getValue());

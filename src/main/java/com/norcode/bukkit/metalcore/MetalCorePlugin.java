@@ -10,7 +10,6 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import net.minecraft.server.v1_7_R1.IChatBaseComponent;
 import net.minecraft.server.v1_7_R1.PacketPlayOutChat;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -45,6 +44,10 @@ public class MetalCorePlugin extends JavaPlugin {
 	public static FileConfiguration getMetalCoreConfig() {
 		return metalCoreConfig;
 
+	}
+
+	public static Datastore getDatastore() {
+		return datastore;
 	}
 
 	@Override
@@ -84,6 +87,7 @@ public class MetalCorePlugin extends JavaPlugin {
 		} else if (metalCoreConfig.getString("datastore").equalsIgnoreCase("redis")) {
 			datastore = new RedisDatastore(this);
 		}
+		getServer().getPluginManager().registerEvents(new LoginListener(), this);
 	}
 
 	public static JedisPool getJedisPool() {
