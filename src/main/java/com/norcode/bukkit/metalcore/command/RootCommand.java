@@ -28,7 +28,7 @@ public class RootCommand extends BaseCommand {
 
 	public RootCommand(MetalCorePlugin plugin, String name, String[] aliases, String requiredPermission, String[] help) {
 		super(plugin, name, aliases, requiredPermission, help);
-		cmd = new BukkitCommand("name");
+		cmd = new BukkitCommand(name);
 		if (aliases != null) {
 			cmd.setAliases(Arrays.asList(aliases));
 		}

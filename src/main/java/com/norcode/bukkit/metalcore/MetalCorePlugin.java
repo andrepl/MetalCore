@@ -48,10 +48,12 @@ public class MetalCorePlugin extends JavaPlugin {
 
 	public static Datastore getDatastore() {
 		return datastore;
+
 	}
 
 	@Override
 	public void onEnable() {
+
 		instances.add(this);
 		if (instances.size() == 1) {
 			logger = new MetalCoreLogger();

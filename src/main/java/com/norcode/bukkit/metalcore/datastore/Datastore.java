@@ -16,4 +16,5 @@ public interface Datastore {
 	public OfflinePlayer getOfflinePlayer(UUID id);
 	public String getPlayerName(UUID id);
 	public void setUUID(OfflinePlayer player, UUID id);
+
 }
