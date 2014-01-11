@@ -36,6 +36,7 @@ public class RootCommand extends BaseCommand {
 			cmd.setPermission(requiredPermission);
 		}
 		cmd.setExecutor(this);
+		cmap.register(name, cmd);
 	}
 
 }
