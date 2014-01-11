@@ -89,6 +89,7 @@ public class MetalCorePlugin extends JavaPlugin {
 		} else if (metalCoreConfig.getString("datastore").equalsIgnoreCase("redis")) {
 			datastore = new RedisDatastore(this);
 		}
+		datastore.onEnable();
 		getServer().getPluginManager().registerEvents(new LoginListener(), this);
 	}
 
