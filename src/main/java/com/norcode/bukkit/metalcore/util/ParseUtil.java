@@ -87,10 +87,10 @@ public class ParseUtil {
 		try {
 			if (parts.length == 6) {
 				return new Location(w,
-						Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]),
+						Double.parseDouble(parts[1]), Double.parseDouble(parts[2]), Double.parseDouble(parts[3]),
 						Float.parseFloat(parts[4]), Float.parseFloat(parts[5]));
 			} else {
-				return new Location(w, Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
+				return new Location(w, Double.parseDouble(parts[1]), Double.parseDouble(parts[2]), Double.parseDouble(parts[3]));
 			}
 		} catch (IllegalArgumentException ex) {
 			return null;
