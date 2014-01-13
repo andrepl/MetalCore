@@ -5,6 +5,7 @@ import com.norcode.bukkit.metalcore.datastore.Datastore;
 import com.norcode.bukkit.metalcore.datastore.DirtyableConfiguration;
 import com.norcode.bukkit.metalcore.datastore.RedisDatastore;
 import com.norcode.bukkit.metalcore.datastore.YamlDatastore;
+import com.norcode.bukkit.metalcore.loottables.LootTables;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -91,6 +92,7 @@ public class MetalCorePlugin extends JavaPlugin {
 		}
 		datastore.onEnable();
 		getServer().getPluginManager().registerEvents(new LoginListener(), this);
+		LootTables.initialize();
 	}
 
 	public static JedisPool getJedisPool() {

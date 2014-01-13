@@ -8,11 +8,16 @@ import net.minecraft.server.v1_7_R1.IChatBaseComponent;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
 import net.minecraft.server.v1_7_R1.PacketPlayOutChat;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Text extends ChatComponentText {
@@ -88,6 +93,22 @@ public class Text extends ChatComponentText {
 
 	public Text setHoverText(String text) {
 		return setHover(HoverAction.SHOW_TEXT, new Text(text));
+	}
+
+	public Text setHoverText(String[] text) {
+		ItemStack stack = new ItemStack(Material.DIRT);
+		ItemMeta meta = stack.getItemMeta();
+
+		List<String> lines = Arrays.asList(text);
+		String line1 = lines.remove(0);
+		meta.setDisplayName(line1);
+		meta.setLore(lines);
+		stack.setItemMeta(meta);
+		net.minecraft.server.v1_7_R1.ItemStack nms = CraftItemStack.asNMSCopy(stack);
+		NBTTagCompound tag = new NBTTagCompound();
+		nms.save(tag);
+		setHover(HoverAction.SHOW_ITEM, new ChatComponentText(tag.toString()));
+		return this;
 	}
 
 	public Text(String s) {
