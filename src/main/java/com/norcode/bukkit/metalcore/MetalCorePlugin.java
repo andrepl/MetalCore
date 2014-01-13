@@ -11,6 +11,7 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import net.minecraft.server.v1_7_R1.IChatBaseComponent;
 import net.minecraft.server.v1_7_R1.PacketPlayOutChat;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -27,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MetalCorePlugin extends JavaPlugin {
 
@@ -210,5 +212,16 @@ public class MetalCorePlugin extends JavaPlugin {
 			return cfg.createSection(getName());
 		}
 		return cfg.getConfigurationSection(getName());
+	}
+
+	public static OfflinePlayer getOfflinePlayer(UUID uuid) {
+		return getDatastore().getOfflinePlayer(uuid);
+	}
+	public Player getOnlinePlayer(UUID id) {
+		return getDatastore().getOnlinePlayer(id);
+	}
+
+	public String getPlayerName(UUID id) {
+		return getDatastore().getPlayerName(id);
 	}
 }
